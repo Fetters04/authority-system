@@ -2,11 +2,13 @@ package com.example.backend.config.security.service;
 
 import com.example.backend.entity.User;
 import com.example.backend.service.UserService;
-import jakarta.annotation.Resource;
+
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
+
+import javax.annotation.Resource;
 
 @Component
 public class CustomerUserDetailsService implements UserDetailsService {

@@ -4,7 +4,6 @@ import com.example.backend.config.security.handler.AnonymousAuthenticationHandle
 import com.example.backend.config.security.handler.CustomerAccessDeniedHandler;
 import com.example.backend.config.security.handler.LoginFailureHandler;
 import com.example.backend.config.security.handler.LoginSuccessHandler;
-import jakarta.annotation.Resource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -16,6 +15,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfigurationSource;
+
+import javax.annotation.Resource;
 
 @Configuration
 @EnableWebSecurity
@@ -51,8 +52,8 @@ public class SpringSecurityConfig {
         http
                 .csrf(csrf -> csrf.disable()) // 禁用 CSRF
                 .cors(cors -> cors.configurationSource(corsConfigurationSource)) // 配置跨域
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/user/login").permitAll() // 放行登录接口
+                .authorizeRequests(auth -> auth
+                        .antMatchers("/api/user/login").permitAll() // 放行登录接口
                         .anyRequest().authenticated() // 其他请求需要认证
                 )
                 .formLogin(form -> form
