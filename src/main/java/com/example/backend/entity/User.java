@@ -78,29 +78,38 @@ public class User implements Serializable, UserDetails {
     @TableField(value = "is_deleted")
     private Integer isDeleted;
 
-    /**
-     * 帐户是否过期(0-未过期，1-已过期)
-     */
     @TableField(value = "is_account_non_expired")
-    private boolean isAccountNonExpired;
+    private Integer isAccountNonExpiredDb;
 
-    /**
-     * 帐户是否被锁定(0-未锁定，1-已锁定)
-     */
+    @Override
+    public boolean isAccountNonExpired() {
+        return isAccountNonExpiredDb != 1;  // 0表示正常，1表示过期
+    }
+
     @TableField(value = "is_account_non_locked")
-    private boolean isAccountNonLocked;
+    private Integer isAccountNonLockedDb;
 
-    /**
-     * 密码是否过期(0-未过期，1-已过期)
-     */
+    @Override
+    public boolean isAccountNonLocked() {
+        return isAccountNonLockedDb != 1;  // 0表示正常，1表示锁定
+    }
+
     @TableField(value = "is_credentials_non_expired")
-    private boolean isCredentialsNonExpired;
+    private Integer isCredentialsNonExpiredDb;
 
-    /**
-     * 帐户是否可用(0-可用，1-禁用)
-     */
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return isCredentialsNonExpiredDb != 1;  // 0表示正常，1表示过期
+    }
+
     @TableField(value = "is_enabled")
-    private boolean isEnabled;
+    private Integer isEnabledDb;
+
+    @Override
+    public boolean isEnabled() {
+        return isEnabledDb != 1;  // 0表示启用，1表示禁用
+    }
+
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
