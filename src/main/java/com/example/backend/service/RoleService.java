@@ -1,9 +1,9 @@
 package com.example.backend.service;
 
+import com.example.backend.entity.Role;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.example.backend.entity.Users;
 
 
-public interface UsersService extends IService<Users> {
+public interface RoleService extends IService<Role> {
 
 }

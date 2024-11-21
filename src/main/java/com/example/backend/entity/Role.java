@@ -9,65 +9,47 @@ import java.util.Date;
 import lombok.Data;
 
 /**
- * 用户表
- * @TableName users
+ * 角色表
+ * @TableName roles
  */
-@TableName(value ="users")
+@TableName(value ="roles")
 @Data
-public class Users implements Serializable {
+public class Role implements Serializable {
     /**
-     * 用户id
+     * 角色id
      */
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
     /**
-     * 用户名
+     * 名称
      */
-    @TableField(value = "username")
-    private String username;
+    @TableField(value = "name")
+    private String name;
 
     /**
-     * 密码
+     * 描述
      */
-    @TableField(value = "password")
-    private String password;
+    @TableField(value = "description")
+    private String description;
 
     /**
-     * 邮箱
-     */
-    @TableField(value = "email")
-    private String email;
-
-    /**
-     * 手机号码
-     */
-    @TableField(value = "phone")
-    private String phone;
-
-    /**
-     * 用户状态（0: 禁用, 1: 启用）
+     * 角色状态（0: 禁用, 1: 启用）
      */
     @TableField(value = "status")
     private Integer status;
 
     /**
-     * 用户头像
-     */
-    @TableField(value = "avatar")
-    private String avatar;
-
-    /**
      * 创建时间
      */
-    @TableField(value = "created_at")
-    private Date createdAt;
+    @TableField(value = "created_time")
+    private Date createdTime;
 
     /**
      * 更新时间
      */
-    @TableField(value = "updated_at")
-    private Date updatedAt;
+    @TableField(value = "updated_time")
+    private Date updatedTime;
 
     /**
      * 逻辑删除（0: 未删除, 1: 删除）

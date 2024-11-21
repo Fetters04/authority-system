@@ -14,7 +14,7 @@ import lombok.Data;
  */
 @TableName(value ="permissions")
 @Data
-public class Permissions implements Serializable {
+public class Permission implements Serializable {
     /**
      * 权限id
      */
@@ -66,14 +66,14 @@ public class Permissions implements Serializable {
     /**
      * 创建时间
      */
-    @TableField(value = "created_at")
-    private Date createdAt;
+    @TableField(value = "created_time")
+    private Date createdTime;
 
     /**
      * 更新时间
      */
-    @TableField(value = "updated_at")
-    private Date updatedAt;
+    @TableField(value = "updated_time")
+    private Date updatedTime;
 
     /**
      * 逻辑删除（0: 未删除, 1: 删除）

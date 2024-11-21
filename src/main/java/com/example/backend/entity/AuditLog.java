@@ -14,7 +14,7 @@ import lombok.Data;
  */
 @TableName(value ="audit_logs")
 @Data
-public class AuditLogs implements Serializable {
+public class AuditLog implements Serializable {
     /**
      * 日志id
      */
@@ -54,8 +54,8 @@ public class AuditLogs implements Serializable {
     /**
      * 日志记录时间
      */
-    @TableField(value = "created_at")
-    private Date createdAt;
+    @TableField(value = "created_time")
+    private Date createdTime;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
