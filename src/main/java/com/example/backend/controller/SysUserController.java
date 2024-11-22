@@ -2,6 +2,9 @@ package com.example.backend.controller;
 
 
 import com.example.backend.config.redis.RedisService;
+import com.example.backend.entity.Permission;
+import com.example.backend.entity.User;
+import com.example.backend.entity.UserInfo;
 import com.example.backend.utils.JwtUtils;
 import com.example.backend.utils.Result;
 import com.example.backend.vo.TokenVo;
@@ -10,11 +13,15 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.util.ObjectUtils;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/sysUser")
@@ -47,7 +54,7 @@ public class SysUserController {
         String reToken = "";
         // 验证原来的token是否合法
         if (jwtUtils.validateToken(token, details)) {
-        // 生成新的token
+            // 生成新的token
             reToken = jwtUtils.refreshToken(token);
         }
         // 获取本次token的到期时间，交给前端做判断
@@ -64,5 +71,33 @@ public class SysUserController {
         TokenVo tokenVo = new TokenVo(expireTime, reToken);
         // 返回数据
         return Result.ok(tokenVo).message("token生成成功");
+    }
+
+    /**
+     * 获取用户信息
+     *
+     * @return
+     */
+    @GetMapping("/getInfo")
+    public Result getInfo() {
+        // 从Spring Security上下文获取用户信息
+        Authentication authentication =
+                SecurityContextHolder.getContext().getAuthentication();
+        // 判断authentication对象是否为空
+        if (authentication == null) {
+            return Result.error().message("用户信息查询失败");
+        }
+        // 获取用户信息
+        User user = (User) authentication.getPrincipal();
+        // 用户权限集合
+        List<Permission> permissionList = user.getPermissionList();
+        // 获取角色权限编码字段
+        Object[] roles = permissionList.stream()
+                .filter(Objects::nonNull)
+                .map(Permission::getCode).toArray();
+        // 创建用户信息对象
+        UserInfo userInfo = new UserInfo(user.getId(), user.getNickName(), user.getAvatar(), null, roles);
+        // 返回数据
+        return Result.ok(userInfo).message("用户信息查询成功");
     }
 }

@@ -21,10 +21,14 @@ import java.nio.charset.StandardCharsets;
 @Component
 public class CustomerAccessDeniedHandler implements AccessDeniedHandler {
     @Override
-    public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
+    public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException {
+        if (response.isCommitted()) {
+            // 如果响应已经提交，直接返回，避免重复写入
+            return;
+        }
+
         // 设置响应的编码格式和状态码
         response.setContentType("application/json;charset=utf-8");
-        // 确保设置 403 状态码
         response.setStatus(HttpServletResponse.SC_FORBIDDEN);
 
         // 将对象转换成 JSON 格式，并消除循环引用
@@ -34,12 +38,10 @@ public class CustomerAccessDeniedHandler implements AccessDeniedHandler {
                 SerializerFeature.DisableCircularReferenceDetect
         );
 
-        // 获取输出流
-        ServletOutputStream outputStream = response.getOutputStream();
-        // 将结果写入响应流
-        outputStream.write(result.getBytes(StandardCharsets.UTF_8));
-        outputStream.flush();
-        outputStream.close();
+        // 获取输出流并写入响应
+        try (ServletOutputStream outputStream = response.getOutputStream()) {
+            outputStream.write(result.getBytes(StandardCharsets.UTF_8));
+            outputStream.flush();
+        }
     }
-
 }
