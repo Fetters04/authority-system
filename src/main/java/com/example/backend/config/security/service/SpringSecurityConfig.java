@@ -1,5 +1,6 @@
 package com.example.backend.config.security.service;
 
+import com.example.backend.config.security.filter.CheckTokenFilter;
 import com.example.backend.config.security.handler.AnonymousAuthenticationHandler;
 import com.example.backend.config.security.handler.CustomerAccessDeniedHandler;
 import com.example.backend.config.security.handler.LoginFailureHandler;
@@ -14,6 +15,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfigurationSource;
 
 import javax.annotation.Resource;
@@ -40,6 +42,9 @@ public class SpringSecurityConfig {
     @Resource
     private CorsConfigurationSource corsConfigurationSource;
 
+    @Resource
+    private CheckTokenFilter checkTokenFilter;
+
     // 密码加密器
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -49,6 +54,9 @@ public class SpringSecurityConfig {
     // 配置 SecurityFilterChain
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        // 登录前进行过滤
+        http.addFilterBefore(checkTokenFilter, UsernamePasswordAuthenticationFilter.class);
+        // 登录过程处理
         http
                 .csrf(csrf -> csrf.disable()) // 禁用 CSRF
                 .cors(cors -> cors.configurationSource(corsConfigurationSource)) // 配置跨域

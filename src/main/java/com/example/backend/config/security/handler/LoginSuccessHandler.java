@@ -2,6 +2,7 @@ package com.example.backend.config.security.handler;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.example.backend.config.redis.RedisService;
 import com.example.backend.entity.User;
 import com.example.backend.utils.JwtUtils;
 import com.example.backend.utils.LoginResult;
@@ -29,6 +30,9 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
     @Resource
     private JwtUtils jwtUtils;
 
+    @Resource
+    private RedisService redisService;
+
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         // 设置响应的编码格式
@@ -55,6 +59,10 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         outputStream.write(result.getBytes(StandardCharsets.UTF_8));
         outputStream.flush();
         outputStream.close();
+
+        // 把生成的token存到redis
+        String tokenKey = "token_" + token;
+        redisService.set(tokenKey, token, jwtUtils.getExpiration() / 1000);
     }
 
 }

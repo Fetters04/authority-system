@@ -7,11 +7,25 @@ spring:
     url: jdbc:mysql://localhost:3306/db_authority_system
     username: root
     password: 123456
+  # redis
+  redis:
+    host: localhost
+    port: 6379
+    database: 0
+    timeout: 10000
+    # 自定义属性
+    expire: 60000
 server:
   port: 8080
 
+# jwt 配置
 jwt:
   # 密钥
   secret: auth
   # 过期时间(ms)
   expiration: 18000000
+
+# 登录请求地址
+request:
+  login:
+    url: /api/user/login
