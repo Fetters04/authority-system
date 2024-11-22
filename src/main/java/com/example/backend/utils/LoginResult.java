@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class LoginResult {
     // 用户编号
-    private Integer id;
+    private Long id;
     // 状态码
     private int code;
     // token令牌

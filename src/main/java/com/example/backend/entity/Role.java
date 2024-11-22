@@ -4,58 +4,65 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+
 import java.io.Serializable;
 import java.util.Date;
+
 import lombok.Data;
 
 /**
- * 角色表
- * @TableName roles
+ * @TableName sys_role
  */
-@TableName(value ="roles")
+@TableName(value = "sys_role")
 @Data
 public class Role implements Serializable {
     /**
-     * 角色id
+     * 角色编号
      */
     @TableId(value = "id", type = IdType.AUTO)
-    private Integer id;
+    private Long id;
 
     /**
-     * 名称
+     * 角色编码
      */
-    @TableField(value = "name")
-    private String name;
+    @TableField(value = "role_code")
+    private String roleCode;
 
     /**
-     * 描述
+     * 角色名称
      */
-    @TableField(value = "description")
-    private String description;
+    @TableField(value = "role_name")
+    private String roleName;
 
     /**
-     * 角色状态（0: 禁用, 1: 启用）
+     * 创建人
      */
-    @TableField(value = "status")
-    private Integer status;
+    @TableField(value = "create_user")
+    private Long createUser;
 
     /**
      * 创建时间
      */
-    @TableField(value = "created_time")
-    private Date createdTime;
+    @TableField(value = "create_time")
+    private Date createTime;
 
     /**
-     * 更新时间
+     * 修改时间
      */
-    @TableField(value = "updated_time")
-    private Date updatedTime;
+    @TableField(value = "update_time")
+    private Date updateTime;
 
     /**
-     * 逻辑删除（0: 未删除, 1: 删除）
+     * 备注
      */
-    @TableField(value = "is_deleted")
-    private Integer isDeleted;
+    @TableField(value = "remark")
+    private String remark;
+
+    /**
+     * 是否删除(0-未删除，1-已删除)
+     */
+    @TableField(value = "is_delete")
+    private Integer isDelete;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

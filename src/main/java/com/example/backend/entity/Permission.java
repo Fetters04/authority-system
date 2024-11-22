@@ -5,82 +5,127 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
 /**
- * 权限表
- * @TableName permissions
+ *
+ * @TableName sys_permission
  */
-@TableName(value ="permissions")
+@TableName(value ="sys_permission")
 @Data
 public class Permission implements Serializable {
     /**
-     * 权限id
+     * 权限编号
      */
     @TableId(value = "id", type = IdType.AUTO)
-    private Integer id;
+    private Long id;
 
     /**
      * 权限名称
      */
-    @TableField(value = "name")
-    private String name;
+    @TableField(value = "label")
+    private String label;
 
     /**
-     * 权限类型（0：目录 1：菜单 2：按钮）
-     */
-    @TableField(value = "type")
-    private Integer type;
-
-    /**
-     * 权限唯一标识符
-     */
-    @TableField(value = "p_key")
-    private String pKey;
-
-    /**
-     * 父权限id
+     * 父权限ID
      */
     @TableField(value = "parent_id")
-    private Integer parentId;
+    private Long parentId;
 
     /**
-     * 前端路径
+     * 父权限名称
+     */
+    @TableField(value = "parent_name")
+    private String parentName;
+
+    /**
+     * 授权标识符
+     */
+    @TableField(value = "code")
+    private String code;
+
+    /**
+     * 路由地址
      */
     @TableField(value = "path")
     private String path;
 
     /**
-     * HTTP 方法
+     * 路由名称
      */
-    @TableField(value = "method")
-    private Object method;
+    @TableField(value = "name")
+    private String name;
 
     /**
-     * 权限描述
+     * 授权路径
      */
-    @TableField(value = "description")
-    private String description;
+    @TableField(value = "url")
+    private String url;
+
+    /**
+     * 权限类型(0-目录 1-菜单 2-按钮)
+     */
+    @TableField(value = "type")
+    private Integer type;
+
+    /**
+     * 图标
+     */
+    @TableField(value = "icon")
+    private String icon;
 
     /**
      * 创建时间
      */
-    @TableField(value = "created_time")
-    private Date createdTime;
+    @TableField(value = "create_time")
+    private Date createTime;
 
     /**
-     * 更新时间
+     * 修改时间
      */
-    @TableField(value = "updated_time")
-    private Date updatedTime;
+    @TableField(value = "update_time")
+    private Date updateTime;
 
     /**
-     * 逻辑删除（0: 未删除, 1: 删除）
+     * 备注
      */
-    @TableField(value = "is_deleted")
-    private Integer isDeleted;
+    @TableField(value = "remark")
+    private String remark;
+
+    /**
+     * 排序
+     */
+    @TableField(value = "order_num")
+    private Integer orderNum;
+
+    /**
+     * 是否删除(0-未删除，1-已删除)
+     */
+    @TableField(value = "is_delete")
+    private Integer isDelete;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
+
+    /**
+     * 子菜单列表
+     */
+    @JsonInclude(JsonInclude.Include.NON_NULL) //属性值为null不进行序列化操作
+    @TableField(exist = false)
+    private List<Permission> children = new ArrayList<Permission>();
+    /**
+     * 用于前端判断是菜单、目录或按钮
+     */
+    @TableField(exist = false)
+    private String value;
+    /**
+     * 是否展开
+     */
+    @TableField(exist = false)
+    private Boolean open;
 }

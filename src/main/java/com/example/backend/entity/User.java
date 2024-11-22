@@ -4,37 +4,75 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
+
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 /**
- * 用户表
- * @TableName user
+ * @TableName sys_user
  */
-@TableName(value ="user")
+@TableName(value = "sys_user")
 @Data
 public class User implements Serializable, UserDetails {
     /**
-     * 用户id
+     * 用户编号
      */
     @TableId(value = "id", type = IdType.AUTO)
-    private Integer id;
+    private Long id;
 
     /**
-     * 用户名
+     * 登录名称(用户名)
      */
     @TableField(value = "username")
     private String username;
 
     /**
-     * 密码
+     * 登录密码
      */
     @TableField(value = "password")
     private String password;
+
+    /**
+     * 真实姓名
+     */
+    @TableField(value = "real_name")
+    private String realName;
+
+    /**
+     * 昵称
+     */
+    @TableField(value = "nick_name")
+    private String nickName;
+
+    /**
+     * 所属部门ID
+     */
+    @TableField(value = "department_id")
+    private Long departmentId;
+
+    /**
+     * 所属部门名称
+     */
+    @TableField(value = "department_name")
+    private String departmentName;
+
+    /**
+     * 性别(0-男，1-女)
+     */
+    @TableField(value = "gender")
+    private Integer gender;
+
+    /**
+     * 电话
+     */
+    @TableField(value = "phone")
+    private String phone;
 
     /**
      * 邮箱
@@ -43,80 +81,63 @@ public class User implements Serializable, UserDetails {
     private String email;
 
     /**
-     * 手机号码
-     */
-    @TableField(value = "phone")
-    private String phone;
-
-    /**
-     * 用户状态（0: 禁用, 1: 启用）
-     */
-    @TableField(value = "status")
-    private Integer status;
-
-    /**
      * 用户头像
      */
     @TableField(value = "avatar")
     private String avatar;
 
     /**
+     * 是否是管理员(1-管理员)
+     */
+    @TableField(value = "is_admin")
+    private Integer isAdmin;
+
+    /**
      * 创建时间
      */
-    @TableField(value = "created_time")
-    private Date createdTime;
+    @TableField(value = "create_time")
+    private Date createTime;
 
     /**
-     * 更新时间
+     * 修改时间
      */
-    @TableField(value = "updated_time")
-    private Date updatedTime;
+    @TableField(value = "update_time")
+    private Date updateTime;
 
     /**
-     * 逻辑删除（0: 未删除, 1: 删除）
+     * 是否删除(0-未删除，1-已删除)
      */
-    @TableField(value = "is_deleted")
-    private Integer isDeleted;
-
-    @TableField(value = "is_account_non_expired")
-    private Integer isAccountNonExpiredDb;
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return isAccountNonExpiredDb != 1;  // 0表示正常，1表示过期
-    }
-
-    @TableField(value = "is_account_non_locked")
-    private Integer isAccountNonLockedDb;
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return isAccountNonLockedDb != 1;  // 0表示正常，1表示锁定
-    }
-
-    @TableField(value = "is_credentials_non_expired")
-    private Integer isCredentialsNonExpiredDb;
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return isCredentialsNonExpiredDb != 1;  // 0表示正常，1表示过期
-    }
-
-    @TableField(value = "is_enabled")
-    private Integer isEnabledDb;
-
-    @Override
-    public boolean isEnabled() {
-        return isEnabledDb != 1;  // 0表示启用，1表示禁用
-    }
-
+    @TableField(value = "is_delete")
+    private Integer isDelete;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 
     /**
+     * 帐户是否过期(1 未过期，0已过期)
+     */
+    private boolean isAccountNonExpired = true;
+    /**
+     * 帐户是否被锁定(1 未过期，0已过期)
+     */
+    private boolean isAccountNonLocked = true;
+    /**
+     * 密码是否过期(1 未过期，0已过期)
+     */
+    private boolean isCredentialsNonExpired = true;
+    /**
+     * 帐户是否可用(1 可用，0 删除用户)
+     */
+    private boolean isEnabled = true;
+    /**
      * 权限列表
      */
     @TableField(exist = false)
     Collection<? extends GrantedAuthority> authorities;
+
+    /**
+     * 用户权限列表
+     */
+    @TableField(exist = false)
+    private List<Permission> permissionList;
 }

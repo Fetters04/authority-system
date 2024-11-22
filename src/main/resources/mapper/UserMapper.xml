@@ -3,20 +3,26 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.backend.mapper.UserMapper">
-    <resultMap id="BaseResultMap" type="com.example.backend.entity.User">
-            <id property="id" column="id" jdbcType="INTEGER"/>
-            <result property="username" column="username" jdbcType="VARCHAR"/>
-            <result property="password" column="password" jdbcType="VARCHAR"/>
-            <result property="email" column="email" jdbcType="VARCHAR"/>
-            <result property="phone" column="phone" jdbcType="VARCHAR"/>
-            <result property="status" column="status" jdbcType="TINYINT"/>
-            <result property="avatar" column="avatar" jdbcType="VARCHAR"/>
-            <result property="createdTime" column="created_time" jdbcType="TIMESTAMP"/>
-            <result property="updatedTime" column="updated_time" jdbcType="TIMESTAMP"/>
-            <result property="isDeleted" column="is_deleted" jdbcType="TINYINT"/>
-            <result property="isAccountNonExpired" column="is_account_non_expired" jdbcType="TINYINT"/>
-            <result property="isAccountNonLocked" column="is_account_non_locked" jdbcType="TINYINT"/>
-            <result property="isCredentialsNonExpired" column="is_credentials_non_expired" jdbcType="TINYINT"/>
-            <result property="isEnabled" column="is_enabled" jdbcType="TINYINT"/>
-    </resultMap>
+
+        <resultMap id="BaseResultMap" type="com.example.backend.entity.User">
+                <id property="id" column="id" jdbcType="BIGINT"/>
+                <result property="username" column="username" jdbcType="VARCHAR"/>
+                <result property="password" column="password" jdbcType="VARCHAR"/>
+                <result property="isAccountNonExpired" column="is_account_non_expired" jdbcType="TINYINT"/>
+                <result property="isAccountNonLocked" column="is_account_non_locked" jdbcType="TINYINT"/>
+                <result property="isCredentialsNonExpired" column="is_credentials_non_expired" jdbcType="TINYINT"/>
+                <result property="isEnabled" column="is_enabled" jdbcType="TINYINT"/>
+                <result property="realName" column="real_name" jdbcType="VARCHAR"/>
+                <result property="nickName" column="nick_name" jdbcType="VARCHAR"/>
+                <result property="departmentId" column="department_id" jdbcType="BIGINT"/>
+                <result property="departmentName" column="department_name" jdbcType="VARCHAR"/>
+                <result property="gender" column="gender" jdbcType="TINYINT"/>
+                <result property="phone" column="phone" jdbcType="VARCHAR"/>
+                <result property="email" column="email" jdbcType="VARCHAR"/>
+                <result property="avatar" column="avatar" jdbcType="VARCHAR"/>
+                <result property="isAdmin" column="is_admin" jdbcType="TINYINT"/>
+                <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+                <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+                <result property="isDelete" column="is_delete" jdbcType="TINYINT"/>
+        </resultMap>
 </mapper>
