@@ -50,11 +50,12 @@ public class CheckTokenFilter extends OncePerRequestFilter {
                 // 进行 token 验证
                 this.validateToken(request);
             }
+            // 正常情况下继续过滤器链
+            filterChain.doFilter(request, response);
         } catch (AuthenticationException e) {
+            // 捕获异常后，通过失败处理器处理
             loginFailureHandler.onAuthenticationFailure(request, response, e);
         }
-        // 登录请求不需要验证token
-        doFilter(request, response, filterChain);
     }
 
     /**
