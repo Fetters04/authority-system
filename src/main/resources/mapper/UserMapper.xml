@@ -25,4 +25,10 @@
                 <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
                 <result property="isDelete" column="is_delete" jdbcType="TINYINT"/>
         </resultMap>
+        <insert id="saveUserRole">
+            insert into sys_user_role(user_id,role_id) values
+            <foreach collection="roleIds" item="item" index="index" separator=",">
+                (#{userId},#{item})
+            </foreach>
+        </insert>
 </mapper>

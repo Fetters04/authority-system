@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -90,6 +91,17 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role>
         baseMapper.deleteRolePermission(id);
         // 删除角色
         return baseMapper.deleteById(id) > 0;
+    }
+
+    /**
+     * 根据用户ID查询该用户拥有的角色ID
+     *
+     * @param userId
+     * @return
+     */
+    @Override
+    public List<Long> findRoleIdByUserId(Long userId) {
+        return baseMapper.findRoleIdByUserId(userId);
     }
 }
 
