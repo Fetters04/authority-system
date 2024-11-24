@@ -4,14 +4,17 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
 import lombok.Data;
 
 /**
- * 
  * @TableName sys_department
  */
-@TableName(value ="sys_department")
+@TableName(value = "sys_department")
 @Data
 public class Department implements Serializable {
     /**
@@ -61,6 +64,17 @@ public class Department implements Serializable {
      */
     @TableField(value = "is_delete")
     private Integer isDelete;
+
+    /**
+     * 是否展开
+     */
+    @TableField(exist = false)
+    private Boolean open;
+    /**
+     * 子部门
+     */
+    @TableField(exist = false)
+    private List<Department> children = new ArrayList<Department>();
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

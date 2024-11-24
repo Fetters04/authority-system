@@ -45,13 +45,13 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
             message = "账户不存在，登录失败";
         } else if (exception instanceof CustomerAuthenticationException) {
             message = exception.getMessage();
-            code = 600;
+            code = ResultCode.NO_LOGIN;
         } else {
             message = "登录失败";
         }
 
         // 将结果转换为 JSON 格式
-        String result = JSON.toJSONString(Result.error().code(ResultCode.ERROR).message(message));
+        String result = JSON.toJSONString(Result.error().code(code).message(message));
         outputStream.write(result.getBytes(StandardCharsets.UTF_8));
         outputStream.flush();
         outputStream.close();
