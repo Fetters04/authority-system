@@ -5,16 +5,15 @@ import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.backend.entity.Department;
 import com.example.backend.entity.User;
+import com.example.backend.mapper.DepartmentMapper;
 import com.example.backend.mapper.UserMapper;
 import com.example.backend.service.DepartmentService;
-import com.example.backend.mapper.DepartmentMapper;
 import com.example.backend.utils.DepartmentTree;
 import com.example.backend.vo.query.DepartmentQueryVo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.Collections;
 import java.util.List;
 
 
@@ -35,7 +34,7 @@ public class DepartmentServiceImpl extends ServiceImpl<DepartmentMapper, Departm
     @Override
     public List<Department> findDepartmentList(DepartmentQueryVo departmentQueryVo) {
         // 创建条件构造器对象
-        QueryWrapper<Department> queryWrapper = new QueryWrapper<Department>();
+        QueryWrapper<Department> queryWrapper = new QueryWrapper<>();
         // 部门名称
         queryWrapper.like(!ObjectUtils.isEmpty(departmentQueryVo.getDepartmentName()),
                 "department_name", departmentQueryVo.getDepartmentName());
@@ -57,7 +56,7 @@ public class DepartmentServiceImpl extends ServiceImpl<DepartmentMapper, Departm
     @Override
     public List<Department> findParentDepartment() {
         // 创建条件构造器对象
-        QueryWrapper<Department> queryWrapper = new QueryWrapper<Department>();
+        QueryWrapper<Department> queryWrapper = new QueryWrapper<>();
         // 排序
         queryWrapper.orderByAsc("order_num");
         // 查询部门列表
@@ -84,7 +83,7 @@ public class DepartmentServiceImpl extends ServiceImpl<DepartmentMapper, Departm
     @Override
     public boolean hasChildrenOfDepartment(Long id) {
         // 创建条件构造器对象
-        QueryWrapper<Department> queryWrapper = new QueryWrapper<Department>();
+        QueryWrapper<Department> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("pid", id);
         // 如果数量大于0，表示存在
         if (baseMapper.selectCount(queryWrapper) > 0) {
@@ -102,7 +101,7 @@ public class DepartmentServiceImpl extends ServiceImpl<DepartmentMapper, Departm
     @Override
     public boolean hasUserOfDepartment(Long id) {
         // 创建条件构造器对象
-        QueryWrapper<User> queryWrapper = new QueryWrapper<User>();
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("department_id", id);
         // 如果数量大于0，表示存在
         if (userMapper.selectCount(queryWrapper) > 0) {
