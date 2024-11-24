@@ -13,4 +13,10 @@
         <result property="remark" column="remark" jdbcType="VARCHAR"/>
         <result property="isDelete" column="is_delete" jdbcType="TINYINT"/>
     </resultMap>
+    <insert id="saveRolePermission">
+        insert into sys_role_permission(role_id,permission_id) values
+        <foreach collection="permissionIds" item="item" index="index" separator=",">
+            (#{roleId},#{item})
+        </foreach>
+    </insert>
 </mapper>
